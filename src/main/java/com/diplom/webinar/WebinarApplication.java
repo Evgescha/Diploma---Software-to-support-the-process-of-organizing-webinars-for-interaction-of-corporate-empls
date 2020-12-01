@@ -8,6 +8,7 @@ public class WebinarApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebinarApplication.class, args);
+		System.out.println("Application started!");
 	}
 
 }
