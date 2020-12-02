@@ -1,13 +1,11 @@
 package com.diplom.webinar.entity;
 
-
-
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -24,23 +22,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import lombok.Data;
-import lombok.NonNull;
 
 @Entity
 @Table(name = "myUsers")
 @Data
 public class User extends AbstractEntity {
 
-    @Column
     @NotNull
     private String username;
     
-    @Column
     @JsonIgnore
     @NotNull
     private String password;
-
-
+    
+    @NotNull
+    private String fio;
+    
+    @NotNull
+    private Date dateBorn;
+   
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="creator")
+    private List<Webinar> createdWebinares= new ArrayList<Webinar>();
     @JsonIgnore
     @Fetch(value = FetchMode.SELECT)
     @ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
@@ -52,13 +54,10 @@ public class User extends AbstractEntity {
                 columnNames = {"user_id", "role_id"})
     )
     private Collection<Role> roles = new ArrayList<Role>();
-
    
     public User() {
         super();
     }
-    
-    
     
     public List<String> getRoleListNames() {
         List<String> roleNames = new ArrayList<>();
@@ -67,5 +66,12 @@ public class User extends AbstractEntity {
         }
         return roleNames;
     }
+
+	@Override
+	public String toString() {
+		return username;
+	}
+    
+    
 
 }

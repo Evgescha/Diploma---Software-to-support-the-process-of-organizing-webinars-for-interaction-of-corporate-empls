@@ -27,10 +27,10 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav" th:if="${#request.userPrincipal != null && #request.isUserInRole('ROLE_USER')}">
                     <a class="nav-item nav-link" href="/">Главная</a>
-                    <a class="nav-item nav-link" href="/webinaresList">Вебинары</a>
-                    <a class="nav-item nav-link" href="/webinaresToGO">Выбранные для посещения</a>
-                    <a class="nav-item nav-link" href="/webinaresHistory">Моя история</a>
-                    <a class="nav-item nav-link" href="/webinaresCreateMy">Создать свой</a>
+                    <a class="nav-item nav-link" href="/webinaries">Вебинары</a>
+                    <a class="nav-item nav-link" href="/webinaries/toGO">Выбранные для посещения</a>
+                    <a class="nav-item nav-link" href="/webinaries/history">Моя история</a>
+                    <a class="nav-item nav-link" href="/webinaries/createMy">Создать свой</a>
                     <a class="nav-item nav-link" href="/profile">Профиль</a>
                     <a class="nav-item nav-link" href="/logout">Выйти</a>
                 </div>
@@ -40,7 +40,7 @@
                     <a class="nav-item nav-link" href="/usersCreatingList">Запросы на создание</a>
                     <a class="nav-item nav-link" href="/categories">Категории</a>
                     <a class="nav-item nav-link" href="/platforms">Платформы</a>
-                    <a class="nav-item nav-link" href="/webinaresList">Вебинары</a>
+                    <a class="nav-item nav-link" href="/webinaries">Вебинары</a>
                     <a class="nav-item nav-link" href="/arhive">Архив</a>
                     <a class="nav-item nav-link" href="/statistic">Статистика</a>
                     <a class="nav-item nav-link" href="/logout">Выйти</a>

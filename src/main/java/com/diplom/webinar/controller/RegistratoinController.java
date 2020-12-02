@@ -15,7 +15,7 @@ import com.diplom.webinar.service.UserServiceImpl;
 
 @Controller
 @RequestMapping
-public class LoginAndRegisterController {
+public class RegistratoinController {
 
     @Autowired
     UserServiceImpl userService;

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+    <title>Добавить/Редактировать</title>
+    <div th:replace="~{commons :: head}"></div>
+</head>
+ 
+<body>
+
+	<div th:replace="~{commons :: nav}"></div>
+
+<section class="editCategory">
+    <div class="container">
+        <div class="row">
+        <div class="col-12 col-md-12 col-lg-8 mx-auto">
+			 <h2 class="text-center">Вебинар</h2>
+             <form th:action="@{/webinaries/create}" th:object="${entity}" method="post">
+                <table style="width:100%">
+                    <tbody>
+                        <tr>
+							<th><label class="mx-2 my-2">Название</label></th>
+							<td><input type="text" th:field="*{name}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Тема</label></th>
+							<td><input type="text" th:field="*{theme}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Цели</label></th>
+							<td><input type="text" th:field="*{goal}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Спикер</label></th>
+							<td><input type="text" th:field="*{spiker}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Категория</label></th>
+							<td>
+								<select name="categoryId" required class="form-control">
+								    <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}" th:selected="${cat==entity.category}"></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Дата</label></th>
+							<td><input type="date" th:field="*{dates}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Время</label></th>
+							<td><input type="time" th:value="*{times}" class="form-control" name="timeStr" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Аннотация</label></th>
+							<td><input type="text" th:field="*{annotaion}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Данные для подключения</label></th>
+							<td><input type="text" th:field="*{dataToConnection}" class="form-control" required/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Платформа</label></th>
+							<td>
+								<select name="platformId" required class="form-control">
+								    <option th:each="plat : ${platforms}" th:value="${plat.id}" th:text="${plat.name}" th:selected="${plat==entity.platform}"></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Создатель?</label></th>
+							<td>
+								<select name="creatorId" required th:hidden="${!#request.isUserInRole('ROLE_ADMIN')}" class="form-control">
+								    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}" th:selected="${user==entity.creator}"></option>
+								</select>								
+							</td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Утвержден?</label></th>
+							<td><input type="checkbox" th:field="*{approved}" class="form-control"  th:disabled="${!#request.isUserInRole('ROLE_ADMIN')}"/></td>
+						</tr>
+						<tr>
+							<th><label class="mx-2 my-2">Закончен?</label></th>  
+							<td><input type="checkbox" th:field="*{ended}" class="form-control"  th:disabled="${!#request.isUserInRole('ROLE_ADMIN')}"/></td>
+						</tr>
+                    </tbody>
+                </table>
+                <p class="my-5 justify-content-between d-flex">
+                	<input type="hidden" id="id" th:field="*{id}">
+                	<input type="button" class="btn btn-primary" value = " Назад " onclick="history.back()"/> 
+                	<input type="submit" class="btn btn-primary" value=" Отправить ">
+            	</p>
+            </form>
+        </div>
+        </div>
+    </div>    
+</section>    
+    
+</body>
+ 
+</html>

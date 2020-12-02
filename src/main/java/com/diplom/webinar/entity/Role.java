@@ -38,4 +38,10 @@ public class Role extends AbstractEntity {
     public Role() {
         super();
     }
+
+	@Override
+	public String toString() {
+		return "Role [name=" + name + "]";
+	}
+    
 }
