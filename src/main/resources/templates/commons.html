@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head >
+<meta th:fragment="head">
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+    </meta>
+</head>
+<body>
+
+
+
+<header th:fragment="nav">
+    <div class="block-top-nav nav-one">
+        <nav class="navbar navbar-expand-lg bg-white">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav" th:if="${#request.userPrincipal != null && #request.isUserInRole('ROLE_USER')}">
+                    <a class="nav-item nav-link" href="/">Главная</a>
+                    <a class="nav-item nav-link" href="/webinaresList">Список вебинаров</a>
+                    <a class="nav-item nav-link" href="/webinaresToGO">Выбранные для посещения</a>
+                    <a class="nav-item nav-link" href="/webinaresHistory">Моя история</a>
+                    <a class="nav-item nav-link" href="/webinaresCreateMy">Создать свой</a>
+                    <a class="nav-item nav-link" href="/profile">Профиль</a>
+                    <a class="nav-item nav-link" href="/logout">Выйти</a>
+                </div>
+                <div class="navbar-nav" th:if="${#request.userPrincipal != null && #request.isUserInRole('ROLE_ADMIN')}">
+                	<a class="nav-item nav-link" href="/">Главная</a>
+                    <a class="nav-item nav-link" href="/usersList">Пользователи</a>
+                    <a class="nav-item nav-link" href="/usersCreatingList">Запросы на создание</a>
+                    <a class="nav-item nav-link" href="/categories">Категории</a>
+                    <a class="nav-item nav-link" href="/webinaresList">Список вебинаров</a>
+                    <a class="nav-item nav-link" href="/arhive">Архив</a>
+                    <a class="nav-item nav-link" href="/statistic">Статистика</a>
+                    <a class="nav-item nav-link" href="/logout">Выйти</a>
+                </div>
+                <div class="navbar-nav" th:if="${#request.userPrincipal == null}">
+                    <a class="nav-item nav-link" href="/login">Войти</a>
+                    <a class="nav-item nav-link" href="/registration">Регистрация</a>
+                </div>
+            </div>
+        </nav>
+        <script type="text/javascript">
+        function me() {
+            var url = "/" + window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+            $('.nav-item ').each(function() {
+                if ($(this).attr('href') === url || $(this).attr('href') === '') {
+                    $(this).addClass('active');
+                }
+            });
+        }
+        me();
+        </script>
+    </div>
+</header>
+
+
+
+
+</body>
+</html>
