@@ -1,5 +1,6 @@
 package com.diplom.webinar.entity;
 
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -17,4 +18,3 @@ public abstract class AbstractEntity {
     private Long id;
 
 }
-

@@ -1,13 +1,15 @@
 package com.diplom.webinar.service;
 
 
+
+
 public interface CrudService<Entity> {
 
-    boolean create(Entity entity);
+    void create(Entity entity) throws Exception;
 
     Entity read(long id);
 
-    boolean update(Entity entity);
+    void update(Entity entity) throws Exception;
 
-    boolean delete(long id);
+    void delete(long id) throws Exception;
 }

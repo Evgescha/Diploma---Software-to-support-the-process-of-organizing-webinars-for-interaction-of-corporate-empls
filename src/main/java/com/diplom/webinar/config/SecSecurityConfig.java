@@ -1,4 +1,6 @@
 package com.diplom.webinar.config;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -14,23 +16,25 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 
 import com.diplom.webinar.service.UserDetailsServiceImpl;
 
-
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
     @Autowired
     private ApplicationContext context;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//        .withUser("user").password("user").roles("USER")
-//        .and()
-//        .withUser("admin").password("admin").roles("ADMIN");
+        auth.inMemoryAuthentication()
+        .withUser("user").password(passwordEncoder().encode("user")).roles("USER")
+        .and()
+        .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
         auth.userDetailsService(userDetailsService);
     }
 
@@ -47,11 +51,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         
         http.authorizeRequests()
         .antMatchers("/admin/**").hasRole("ADMIN")
-        .antMatchers( "/registration","/login").anonymous()
-        .antMatchers("/","/css/**","/img/**","/js/**").permitAll()
+        .antMatchers( "/registration","/login","/j _spring_security_check").anonymous()
+        .antMatchers("/", "/css/**","/js/**","/img/**","/j _spring_security_check").permitAll()
         .anyRequest().authenticated().and()
         .formLogin().loginPage("/login")
-	        .loginProcessingUrl("/login")
+	        .loginProcessingUrl("/login1")
 	        .failureUrl("/login?error=true")
 	        .defaultSuccessUrl("/") 
 	        .usernameParameter("username")
@@ -61,7 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")
             .logoutSuccessUrl("/")
         .deleteCookies("JSESSIONID");
-                
+        
+        http.headers().frameOptions().sameOrigin();
     }
 
 }
