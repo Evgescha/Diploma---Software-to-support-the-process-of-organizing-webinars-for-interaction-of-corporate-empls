@@ -4,12 +4,14 @@
 <meta th:fragment="head">
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
     </meta>
 </head>
 <body>
@@ -25,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav" th:if="${#request.userPrincipal != null && #request.isUserInRole('ROLE_USER')}">
                     <a class="nav-item nav-link" href="/">Главная</a>
-                    <a class="nav-item nav-link" href="/webinaresList">Список вебинаров</a>
+                    <a class="nav-item nav-link" href="/webinaresList">Вебинары</a>
                     <a class="nav-item nav-link" href="/webinaresToGO">Выбранные для посещения</a>
                     <a class="nav-item nav-link" href="/webinaresHistory">Моя история</a>
                     <a class="nav-item nav-link" href="/webinaresCreateMy">Создать свой</a>
@@ -37,7 +39,8 @@
                     <a class="nav-item nav-link" href="/usersList">Пользователи</a>
                     <a class="nav-item nav-link" href="/usersCreatingList">Запросы на создание</a>
                     <a class="nav-item nav-link" href="/categories">Категории</a>
-                    <a class="nav-item nav-link" href="/webinaresList">Список вебинаров</a>
+                    <a class="nav-item nav-link" href="/platforms">Платформы</a>
+                    <a class="nav-item nav-link" href="/webinaresList">Вебинары</a>
                     <a class="nav-item nav-link" href="/arhive">Архив</a>
                     <a class="nav-item nav-link" href="/statistic">Статистика</a>
                     <a class="nav-item nav-link" href="/logout">Выйти</a>

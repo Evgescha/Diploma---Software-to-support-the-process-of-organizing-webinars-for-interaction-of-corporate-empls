@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+    <title>Добавить/Редактировать</title>
+    <div th:replace="~{commons :: head}"></div>
+</head>
+ 
+<body>
+
+	<div th:replace="~{commons :: nav}"></div>
+
+<section class="editCategory">
+    <div class="container">
+        <div class="row">
+        <div class="col-12 col-md-12 col-lg-8 mx-auto">
+			 <h2 class="text-center">Категория</h2>
+             <form th:action="@{/categories/create}" th:object="${entity}" method="post" class="register">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th><label class="mx-2">Название</label></th>
+                            <td><input type="text" th:field="*{name}" class="form-control" required/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="my-5 justify-content-between d-flex">
+                	<input type="hidden" id="id" th:field="*{id}">
+                	<input type="button" class="btn btn-primary" value = " Назад " onclick="history.back()"/> 
+                	<input type="submit" class="btn btn-primary" value=" Отправить ">
+            	</p>
+            </form>
+        </div>
+        </div>
+    </div>    
+</section>    
+    
+</body>
+ 
+</html>
