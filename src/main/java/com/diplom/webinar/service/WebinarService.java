@@ -9,7 +9,7 @@ import com.diplom.webinar.repository.WebinarRepository;
 @Service
 public class WebinarService extends CrudImpl<Webinar> {
 
-//	public WebinarRepository repository;
+	public WebinarRepository repository;
 
 	@Autowired
 	public WebinarService(WebinarRepository repository) {
