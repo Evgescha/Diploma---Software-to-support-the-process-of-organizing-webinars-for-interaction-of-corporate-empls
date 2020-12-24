@@ -75,6 +75,19 @@ public class User extends AbstractEntity {
     private List<Webinar> webinariesToGo = new ArrayList<Webinar>();
    
     
+    @JsonIgnore
+    @Fetch(value = FetchMode.SELECT)
+    @ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_category",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id"),
+        uniqueConstraints = @UniqueConstraint(
+                name="users_categories",
+                columnNames = {"user_id", "category_id"})
+    )
+    private List<Category> categoriesToShow = new ArrayList<Category>();
+   
+        
     
     
     public List<String> getRoleListNames() {

@@ -48,20 +48,32 @@ public class WebinarToUserController {
 		if (list == null)
 			model.addAttribute("list", null);
 		else {
-			//цикл вебинаров с бд
+			// цикл вебинаров с бд
 			for (int i = list.size() - 1; i >= 0; i--) {
-				
-				if(!list.get(i).isApproved() || list.get(i).isEnded()) {
+				// удаление не подтвержденных и тех, что уже прошли
+				if (!list.get(i).isApproved() || list.get(i).isEnded()) {
 					list.remove(i);
 					continue;
 				}
+				
+				if(list.size()==0)continue;
+				
+				// цикл вебинаров для посещения пользователей, удаляем те, на которые уже идем
+				for (int j = 0; j < user.getWebinariesToGo().size(); j++) {
 
-				//цикл вебинаров для посещения пользователей
-				for(int j=0;j<user.getWebinariesToGo().size();j++) {
-					if(list.size()==0)continue;
-					if(user.getWebinariesToGo().get(j).getId()==list.get(i).getId())
+					if (user.getWebinariesToGo().get(j).getId() == list.get(i).getId()) {
 						list.remove(i);
+						continue;
+					}
 				}
+				// проверяем, совпадает ли категория вебинаров с теми, что уже есть
+				boolean isWebinarInRightCategory = false;
+				for (Category cat : user.getCategoriesToShow()) {
+					if (cat.getId() == list.get(i).getId())
+						isWebinarInRightCategory = true;
+				}
+				if (!isWebinarInRightCategory)
+					list.remove(i);
 			}
 			model.addAttribute("isContains", false);
 			model.addAttribute("list", list);
@@ -73,9 +85,8 @@ public class WebinarToUserController {
 	// когда согласился пойти на выбранный
 	@GetMapping
 	@RequestMapping(path = { "/igo/{id}" })
-	public String addWebinarInList(Model model, @PathVariable("id") Long id, Principal principal)
-			throws Exception {
-		User user = serviceUser.findByUsername(principal.getName());		
+	public String addWebinarInList(Model model, @PathVariable("id") Long id, Principal principal) throws Exception {
+		User user = serviceUser.findByUsername(principal.getName());
 		user.getWebinariesToGo().add(service.read(id));
 		serviceUser.update(user);
 
@@ -90,50 +101,50 @@ public class WebinarToUserController {
 		System.out.println("Webinar toGo");
 		User user = serviceUser.findByUsername(principal.getName());
 
-		List<Webinar> list =user.getWebinariesToGo();
+		List<Webinar> list = user.getWebinariesToGo();
 		for (int i = list.size() - 1; i >= 0; i--) {
-			if(!list.get(i).isApproved() || list.get(i).isEnded()) 
+			if (!list.get(i).isApproved() || list.get(i).isEnded())
 				list.remove(i);
 		}
-		
+
 		model.addAttribute("isContains", true);
 		model.addAttribute("list", list);
 		return "webinariesToUser";
 	}
 
-	//список всех выбранных для похода
-		@GetMapping
-		@RequestMapping(path = { "/history" })
-		public String getMyHistory(Model model, Principal principal) throws RecordNotFoundException {
+	// список всех выбранных для похода
+	@GetMapping
+	@RequestMapping(path = { "/history" })
+	public String getMyHistory(Model model, Principal principal) throws RecordNotFoundException {
 
-			User user = serviceUser.findByUsername(principal.getName());
-			List<Webinar> list =user.getWebinariesToGo();
-			for (int i = list.size() - 1; i >= 0; i--) {
-				if(!list.get(i).isEnded()) 
-					list.remove(i);
-			}
-
-			model.addAttribute("isContains", true);
-			model.addAttribute("isEnded", true);
-			model.addAttribute("list", list);
-			return "webinariesToUser";
+		User user = serviceUser.findByUsername(principal.getName());
+		List<Webinar> list = user.getWebinariesToGo();
+		for (int i = list.size() - 1; i >= 0; i--) {
+			if (!list.get(i).isEnded())
+				list.remove(i);
 		}
-		
+
+		model.addAttribute("isContains", true);
+		model.addAttribute("isEnded", true);
+		model.addAttribute("list", list);
+		return "webinariesToUser";
+	}
+
 	// удаление выбранного из своего списка для похода
 	@GetMapping
 	@RequestMapping(path = "/delete/{id}")
 	public String delete(Model model, @PathVariable("id") Long id, Principal principal) throws Exception {
-		
+
 		User user = serviceUser.findByUsername(principal.getName());
-		for(int i=0;i<user.getWebinariesToGo().size();i++)
-			if(user.getWebinariesToGo().get(i).getId()==id)
+		for (int i = 0; i < user.getWebinariesToGo().size(); i++)
+			if (user.getWebinariesToGo().get(i).getId() == id)
 				user.getWebinariesToGo().remove(i);
-		
+
 		serviceUser.update(user);
-		
+
 		return "redirect:/webinariesToUser/toGo";
 	}
-	
+
 	// получение информации о выбранном
 	@GetMapping
 	@RequestMapping(path = "/info/{id}")
@@ -141,15 +152,17 @@ public class WebinarToUserController {
 		User user = serviceUser.findByUsername(principal.getName());
 
 		Webinar read = service.read(id);
-		boolean isContains=false;
+		boolean isContains = false;
 
-		if(user==null)isContains=true; else
-		for(int i=0;i<user.getWebinariesToGo().size();i++)
-			if(user.getWebinariesToGo().get(i).getId()==id)
-				isContains=true;
+		if (user == null)
+			isContains = true;
+		else
+			for (int i = 0; i < user.getWebinariesToGo().size(); i++)
+				if (user.getWebinariesToGo().get(i).getId() == id)
+					isContains = true;
 		model.addAttribute("isContains", isContains);
-		if(read.isEnded())
-		model.addAttribute("isEnded", true);
+		if (read.isEnded())
+			model.addAttribute("isEnded", true);
 		model.addAttribute("entity", read);
 
 		return "webinariesInfo";

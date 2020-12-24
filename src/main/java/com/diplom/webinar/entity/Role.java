@@ -1,7 +1,5 @@
 package com.diplom.webinar.entity;
 
-
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,30 +16,30 @@ import lombok.Data;
 @Data
 public class Role extends AbstractEntity {
 
-    @Column(unique = true)
-    private String name;
+	@Column(unique = true)
+	private String name;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private Collection<User> users = new ArrayList<User>();
+	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+	private Collection<User> users = new ArrayList<User>();
 
-    public Role(final String name) {
-        super();
-        this.name = name;
-    }
+	public Role(final String name) {
+		super();
+		this.name = name;
+	}
 
-    public Role(final String name, final Collection<User> users) {
-        super();
-        this.name = name;
-        this.users = users;
-    }
+	public Role(final String name, final Collection<User> users) {
+		super();
+		this.name = name;
+		this.users = users;
+	}
 
-    public Role() {
-        super();
-    }
+	public Role() {
+		super();
+	}
 
 	@Override
 	public String toString() {
 		return "Role [name=" + name + "]";
 	}
-    
+
 }

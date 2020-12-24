@@ -302,3 +302,8 @@ select{
 .d-none{
 	display: none;
 }
+
+.profileInfo select{
+	height: auto;
+	margin-bottom: 10px;
+}

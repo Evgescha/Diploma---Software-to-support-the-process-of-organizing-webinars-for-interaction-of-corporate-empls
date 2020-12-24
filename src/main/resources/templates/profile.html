@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Профиль</title>
+<div th:replace="~{commons :: head}"></div>
+</head>
+<body>
+
+
+	<div th:replace="~{commons :: nav}"></div>
+	
+
+	<h3 class="text-center" th:if="${success}" th:text="${success}"></h3>
+
+
+<section class="profileInfo">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+				<h1 class="text-center fz-20" th:text="'Добро пожаловать на Webinares, '+${entity.username}">Добро пожаловать на Webinares</h1>
+            </div>
+        </div>
+            <div class="row">
+            <div class="col">
+            	<h2>Плюсы проведения вебинаров в сфере здравоохранения</h2>
+            	<p>Ваше ФИО</p>
+                <p th:text="${entity.fio}">ФИО</p>
+                <p>Дата рождения</p>
+                <p th:text="${entity.dateBorn}">12,12,2012</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+             	<form action="/profile/edit" method="post">
+
+	                <h2>Выберите ваши категории</h2>
+					<select name="categ" id="categ" multiple="multiple" required>
+						<option name="categ" th:each="cat : ${list}" th:value="${cat.id}" th:text="${cat}"
+							th:selected="${entity.categoriesToShow.contains(cat)}"></option>
+					</select>
+
+					<p class="d-flex justify-content-end">
+                     	<button type="submit" class="btn btn-primary mx-2">Сохранить</a>
+                	</p>
+				</form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+</body>
+</html>
