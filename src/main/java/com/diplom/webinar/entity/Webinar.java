@@ -4,12 +4,14 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 
@@ -49,5 +51,6 @@ public class Webinar extends AbstractEntity {
 	private Collection<User> users = new ArrayList<User>();
 
 
-	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="webinar")
+	private List<Feedback> feedbacks= new ArrayList<Feedback>();	
 }

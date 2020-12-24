@@ -1,24 +1,24 @@
 package com.diplom.webinar.controller;
 
 import java.security.Principal;
-import java.sql.Time;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.diplom.webinar.entity.Category;
-import com.diplom.webinar.entity.Platform;
+import com.diplom.webinar.entity.Feedback;
 import com.diplom.webinar.entity.User;
 import com.diplom.webinar.entity.Webinar;
 import com.diplom.webinar.exception.RecordNotFoundException;
 import com.diplom.webinar.service.CategoryService;
+import com.diplom.webinar.service.FeedbackService;
 import com.diplom.webinar.service.PlatformService;
 import com.diplom.webinar.service.UserServiceImpl;
 import com.diplom.webinar.service.WebinarService;
@@ -38,6 +38,9 @@ public class WebinarToUserController {
 
 	@Autowired
 	PlatformService servicePlatform;
+	
+	@Autowired
+	FeedbackService serviceFeedback;
 
 	// список вебинаров кроме тех, на которые уже иду
 	@GetMapping
@@ -164,7 +167,30 @@ public class WebinarToUserController {
 		if (read.isEnded())
 			model.addAttribute("isEnded", true);
 		model.addAttribute("entity", read);
+		model.addAttribute("username", user.getFio());
 
 		return "webinariesInfo";
+	}
+	
+	
+	// оставить отзыв
+	@PostMapping
+	@RequestMapping(path = "/addFeedback/{id}")
+	public String addFeedback(Model model, @PathVariable("id") Long id, 
+			@RequestParam(value = "text") String text,
+			Principal principal) throws Exception {
+		
+
+		Webinar read = service.read(id);
+		Feedback fb = new Feedback();
+		fb.setAuthor(principal.getName());
+		fb.setText(text);
+		serviceFeedback.create(fb);
+		Feedback feedback = serviceFeedback.repository.findByAuthorAndText(fb.getAuthor(), text);
+		read.getFeedbacks().add(feedback);
+		service.update(read);
+		feedback.setWebinar(read);
+		serviceFeedback.update(feedback);
+		return "redirect:/webinariesToUser/info/"+id;
 	}
 }

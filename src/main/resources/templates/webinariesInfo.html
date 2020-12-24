@@ -94,6 +94,43 @@
 
     </div>    
 </section>    
+
+<section class="feedbacks my-5" th:each="fdbck : ${entity.feedbacks}">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            	<div class="feedback">
+            		<div class="item" >
+            			<div class="name" th:text="${fdbck.author}"></div>
+            			<div class="text" th:text="${fdbck.text}"></div>
+            		</div>
+            	</div>
+        	</div>
+        </div>
+    </div>    
+</section>    
+
+<section class="feedbackMy my-5">
+    <div class="container">
+    
+        <div class="row">
+            <div class="col">
+            	<div class="feedback">
+            		<label class="mx-2 my-2">Оставь свой отзыв!</label>
+            		<div class="item" >
+            			<form th:action="'/webinariesToUser/addFeedback/'+${entity.id}" method="post">
+            				<input type="text" th:value="${entity.id}" name="id" disabled hidden>
+            				<input name="author" type="text" th:value="${username}" disabled>
+            				<textarea name = "text" rows="5" cols="30"></textarea>
+            				<button type="submit" class="btn btn-primary" >Оставить отзыв</a>
+            			</form>
+            		</div>
+            	</div>
+        	</div>
+        </div>
+    </div>    
+</section>    
+
     
 </body>
  
