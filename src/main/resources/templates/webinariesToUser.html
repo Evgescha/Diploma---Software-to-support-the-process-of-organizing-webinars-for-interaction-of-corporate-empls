@@ -10,8 +10,9 @@
     
    
 <section class="category-list"> 
-    <h2 th:if="${!isContains}" class="text-center">Вебинары, доступные для посещения</h2>
-    <h2 th:if="${isContains}" class="text-center">Выбранные для посещения вебинары</h2>
+    <h2 th:if="${!isContains and isEnded==null}" class="text-center">Вебинары, доступные для посещения</h2>
+    <h2 th:if="${isContains and isEnded==null}" class="text-center">Выбранные для посещения вебинары</h2>
+    <h2 th:if="${isEnded}" class="text-center">Вебинары, которые уже закончились</h2>
     
     <div class="container my-2 " th:each="entity : ${list}">
         <div class="card">

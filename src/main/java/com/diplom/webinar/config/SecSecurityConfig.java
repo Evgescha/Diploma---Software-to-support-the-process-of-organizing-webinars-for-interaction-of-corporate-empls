@@ -50,7 +50,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         
         http.authorizeRequests()
-        .antMatchers("/admin/**","/webinaries/notapproved","/webinaries/approved","/categories","/platforms","/usersList").hasRole("ADMIN")
+        .antMatchers("/admin/**","/webinaries/notapproved","/webinaries/approved","/categories","/platforms","/usersList","/webinaries/arhive").hasRole("ADMIN")
         .antMatchers( "/registration","/login","/j _spring_security_check").anonymous()
         .antMatchers("/", "/css/**","/js/**","/img/**","/j _spring_security_check").permitAll()
         .anyRequest().authenticated().and()

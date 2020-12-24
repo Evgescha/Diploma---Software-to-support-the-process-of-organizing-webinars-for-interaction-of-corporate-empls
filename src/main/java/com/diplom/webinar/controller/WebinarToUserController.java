@@ -142,6 +142,8 @@ public class WebinarToUserController {
 
 		Webinar read = service.read(id);
 		boolean isContains=false;
+
+		if(user==null)isContains=true; else
 		for(int i=0;i<user.getWebinariesToGo().size();i++)
 			if(user.getWebinariesToGo().get(i).getId()==id)
 				isContains=true;

@@ -122,4 +122,21 @@ public class WebinarController {
 			return "redirect:/webinariesToUser";
 		return "redirect:/webinaries/approved";
 	}
+	//список всех выбранных для похода
+	@GetMapping
+	@RequestMapping(path = { "/arhive" })
+	public String getMyHistory(Model model) throws RecordNotFoundException {
+
+		List<Webinar> list = service.repository.findAll();
+		for (int i = list.size() - 1; i >= 0; i--) {
+			if(!list.get(i).isEnded()) 
+				list.remove(i);
+		}
+
+		model.addAttribute("isContains", true);
+		model.addAttribute("isEnded", true);
+		model.addAttribute("list", list);
+		return "webinariesToUser";
+	}
+	
 }
