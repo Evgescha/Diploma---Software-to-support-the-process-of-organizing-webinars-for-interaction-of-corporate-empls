@@ -307,3 +307,11 @@ select{
 	height: auto;
 	margin-bottom: 10px;
 }
+.editCategory table{
+	width: 100%
+}
+.item-title{
+
+    font-size: 25px;
+    font-style: italic;
+}

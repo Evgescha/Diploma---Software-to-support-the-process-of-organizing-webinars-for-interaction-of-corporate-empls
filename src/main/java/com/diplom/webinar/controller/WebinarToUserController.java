@@ -53,28 +53,32 @@ public class WebinarToUserController {
 		else {
 			// цикл вебинаров с бд
 			for (int i = list.size() - 1; i >= 0; i--) {
+				if(list.size()<=i)continue;
 				// удаление не подтвержденных и тех, что уже прошли
 				if (!list.get(i).isApproved() || list.get(i).isEnded()) {
 					list.remove(i);
 					continue;
 				}
 				
-				if(list.size()==0)continue;
+//				if(list.size()<=i)continue;
 				
 				// цикл вебинаров для посещения пользователей, удаляем те, на которые уже идем
 				for (int j = 0; j < user.getWebinariesToGo().size(); j++) {
-
+					if(list.size()<=i)continue;
 					if (user.getWebinariesToGo().get(j).getId() == list.get(i).getId()) {
 						list.remove(i);
 						continue;
 					}
 				}
+				
 				// проверяем, совпадает ли категория вебинаров с теми, что уже есть
 				boolean isWebinarInRightCategory = false;
 				for (Category cat : user.getCategoriesToShow()) {
+					if(list.size()<=i)continue;
 					if (cat.getId() == list.get(i).getId())
 						isWebinarInRightCategory = true;
 				}
+				if(list.size()<=i)continue;
 				if (!isWebinarInRightCategory)
 					list.remove(i);
 			}

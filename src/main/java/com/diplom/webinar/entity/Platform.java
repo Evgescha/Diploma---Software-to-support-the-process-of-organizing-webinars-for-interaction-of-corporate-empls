@@ -15,7 +15,7 @@ import lombok.Data;
 public class Platform extends AbstractEntity {
 	@Column
 	String name;
-	@Column(length = 3000)
+	@Column(length = 6000)
 	String instruction;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="platform")

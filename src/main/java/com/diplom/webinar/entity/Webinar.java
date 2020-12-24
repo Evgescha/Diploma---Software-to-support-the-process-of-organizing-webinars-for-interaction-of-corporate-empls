@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -20,7 +21,9 @@ import lombok.Data;
 public class Webinar extends AbstractEntity {
 
 	String name;
+	@Column(length = 300)
 	String theme;
+	@Column(length = 300)
 	String goal;
 
 	String spiker;
@@ -32,7 +35,9 @@ public class Webinar extends AbstractEntity {
 	
 	Date dates;
 	Time times;
+	@Column(length = 1000)
 	String annotaion;
+	@Column(length = 300)
 	String dataToConnection;
 	
 	@ManyToOne

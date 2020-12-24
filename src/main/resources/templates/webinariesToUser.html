@@ -17,27 +17,23 @@
     <div class="container my-2 " th:each="entity : ${list}">
         <div class="card">
             <div class="row">
-                <div class="card-body col-md-8">
-                    <div class="container my-5">                        
-                        <div>
-                            <div>
-                                <div class="item">
-                                    <div class="item-title" th:text="${entity.name}">Title webinar</div>
-                                    <div class="item-whoAndWhen">
-                                        <div class="item-who" th:text="'Спикер: '+${entity.spiker}">Spiker</div>
-                                        <div class="item-what" th:text="'Категория: '+${entity.category}">Category</div>
-                                        <div class="item-when" th:text="'Дата вебинара: '+${entity.dates}">12.12.2012</div>
-                                    </div>
-                                    <div class="item-annotaion" th:text="${entity.annotaion}">Аннотация о вебинаре</div>
-                                    <div class="item-butons">
-                                        <a th:if="${isContains and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
-                    					<a th:if="${!isContains  and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
-                                        <a href="#" th:href="'/webinariesToUser/info/'+${entity.id}" class="getInfo btn btn-primary">Подробнее</a>
-                                    </div>
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
+                <div class="card-body">
+                    <div class="container">                        
+	                     <div class="item">
+	                         <div class="item-title" th:text="${entity.name}">Title webinar</div>
+	                         <div class="item-whoAndWhen">
+	                             <div class="item-who" th:text="'Спикер: '+${entity.spiker}">Spiker</div>
+	                             <div class="item-what" th:text="'Категория: '+${entity.category}">Category</div>
+	                             <div class="item-when" th:text="'Дата вебинара: '+${entity.dates}">12.12.2012</div>
+	                         </div>
+	                         <div class="item-annotaion" th:text="${entity.annotaion}">Аннотация о вебинаре</div>
+	                         <div class="item-butons">
+	                             <a th:if="${isContains and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
+	         					<a th:if="${!isContains  and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
+	                             <a href="#" th:href="'/webinariesToUser/info/'+${entity.id}" class="getInfo btn btn-primary">Подробнее</a>
+	                         </div>
+	                     </div>                               
+	                 </div>
                 </div>
             </div>
         </div>
