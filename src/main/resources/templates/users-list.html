@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+	<div th:replace="~{commons :: head}"></div>
+    <title>Пользователи</title>
+</head>
+<body>
+	<div th:replace="~{commons :: nav}"></div>
+	
+   
+<section class="category-list"> 
+    <h2 class="text-center"> Пользователи системы</h2>
+    <div class="container my-2">
+        <div class="card">
+            <div class="row">
+                <div class="card-body col">
+                    <div th:switch="${list}" class="container my-5" style="overflow: scroll;">                        
+                        <div class="col-md-12">
+                            <h2 th:case="null"> Пользователей не найдено </h2>
+                            <div th:case="*">
+                                <table class="table table-striped table-responsive-md">
+                                    <thead>
+                                        <tr>
+                                            <th>ФИО</th>
+                                            <th>Логин</th>
+                                            <th>Дата рождения</th>
+                                            <th>История вебинаров</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    	<div  th:each="entity : ${list}">
+	                                        <tr>
+	                                            <td th:text="${entity.fio}"></td>
+												<td th:text="${entity.username}"></td>
+												<td th:text="${entity.dateBorn}"></td>
+												<td><button class="btn" th:onclick="'showMe('+${entity.id}+')'">Подробнее</button></td>
+	                                            <td class="btnInTable widthLastCol">
+	                                                <a th:href="@{/users/delete/{id}(id=${entity.id})}" class="btn btn-primary">
+	                                                    <i class="fas fa-trash">Удалить</i>
+	                                                </a>
+	                                            </td>
+	                                        </tr>
+<!-- 	                                        Таблица для истории пользователя -->
+	                                        <tr th:class="'idOrder'+${entity.id}+' d-none'">
+	                                        	<td  colspan="5">	                                        	
+		                                        	<table  border="1" style="width: 100%" class="table table-striped table-responsive-md">
+				                                        <tr>
+				                                            <th>Название вебинара</th>
+				                                            <th>Дата вебинара</th>
+				                                        </tr>
+				                                        <tr th:each="web : ${entity.webinariesToGo}" th:if="${web.ended}">
+				                                            <td th:text="${web.name}"></td>
+															<td th:text="${web.dates}"></td>
+														</tr>
+		                                        	</table>
+	                                        	</td>
+	                                        </tr>
+                                       </div>
+                                    </tbody>
+                                </table>
+                            </div>                                     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+	function showMe(id){
+		$(".idOrder"+id).toggleClass("d-none");
+	}
+	function printMe(){
+		$('button').toggleClass("d-none");
+		$('nav').toggleClass("d-none");
+		$('.form').toggleClass("d-none");
+		window.print();
+		setTimeout(showBtn(),10000);
+	}
+	function showBtn(){
+		$('.form').toggleClass("d-none");
+		$('nav').toggleClass("d-none");
+		$('button').toggleClass("d-none");
+	}
+	function makeDate(){
+		var now = new Date();
+		var dt=now.getFullYear()+'-'+("0"+(now.getMonth()+1)).slice(-2)+'-'+("0"+(now.getDate())).slice(-2);
+		$('input#date').each( function () {
+			$(this).val(dt);
+			
+		});
+		}
+</script>   
+   
+</body>
+ 
+</html>

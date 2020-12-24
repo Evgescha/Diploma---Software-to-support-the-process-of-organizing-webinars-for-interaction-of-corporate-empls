@@ -36,7 +36,7 @@
                 </div>
                 <div class="navbar-nav" th:if="${#request.userPrincipal != null && #request.isUserInRole('ROLE_ADMIN')}">
                 	<a class="nav-item nav-link" href="/">Главная</a>
-                    <a class="nav-item nav-link" href="/usersList">Пользователи</a>
+                    <a class="nav-item nav-link" href="/users/usersList">Пользователи</a>
                     <a class="nav-item nav-link" href="/webinaries/notapproved">Запросы на создание</a>
                     <a class="nav-item nav-link" href="/categories">Категории</a>
                     <a class="nav-item nav-link" href="/platforms">Платформы</a>
