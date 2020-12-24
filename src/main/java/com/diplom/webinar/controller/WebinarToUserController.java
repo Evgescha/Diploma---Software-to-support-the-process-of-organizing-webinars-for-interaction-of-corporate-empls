@@ -167,7 +167,10 @@ public class WebinarToUserController {
 		if (read.isEnded())
 			model.addAttribute("isEnded", true);
 		model.addAttribute("entity", read);
-		model.addAttribute("username", user.getFio());
+		if(user!=null)
+			model.addAttribute("username", user.getFio());
+		else
+			model.addAttribute("username", "admin");
 
 		return "webinariesInfo";
 	}

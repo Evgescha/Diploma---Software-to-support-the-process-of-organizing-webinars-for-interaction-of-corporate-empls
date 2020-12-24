@@ -31,9 +31,6 @@ public class ProfileController {
 	@GetMapping
 	String getProfile(Model model,Principal principal) {
 		User user = userService.findByUsername(principal.getName());
-		System.out.println("users categories");
-		for(Category cat:user.getCategoriesToShow())
-			System.out.println(cat);
 		
 		model.addAttribute("entity", user);
 		model.addAttribute("list", categoryService.repository.findAll());
