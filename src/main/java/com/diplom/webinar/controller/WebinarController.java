@@ -50,6 +50,8 @@ public class WebinarController {
 			for (int i = list.size() - 1; i >= 0; i--) {
 				if(!list.get(i).isApproved())
 					list.remove(i);
+				else if(list.get(i).isEnded())
+					list.remove(i);
 			}
 			model.addAttribute("list", list);
 		}
