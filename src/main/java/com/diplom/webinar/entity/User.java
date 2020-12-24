@@ -41,8 +41,14 @@ public class User extends AbstractEntity {
     @NotNull
     private Date dateBorn;
    
+    public User() {
+    	super();
+    }
+    
+
     @OneToMany(fetch=FetchType.LAZY, mappedBy="creator")
     private List<Webinar> createdWebinares= new ArrayList<Webinar>();
+    
     @JsonIgnore
     @Fetch(value = FetchMode.SELECT)
     @ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
@@ -55,9 +61,21 @@ public class User extends AbstractEntity {
     )
     private Collection<Role> roles = new ArrayList<Role>();
    
-    public User() {
-        super();
-    }
+    
+    @JsonIgnore
+    @Fetch(value = FetchMode.SELECT)
+    @ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_webinar",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "webinar_id"),
+        uniqueConstraints = @UniqueConstraint(
+                name="users_webinaries",
+                columnNames = {"user_id", "webinar_id"})
+    )
+    private List<Webinar> webinariesToGo = new ArrayList<Webinar>();
+   
+    
+    
     
     public List<String> getRoleListNames() {
         List<String> roleNames = new ArrayList<>();

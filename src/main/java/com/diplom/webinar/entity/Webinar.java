@@ -2,9 +2,13 @@ package com.diplom.webinar.entity;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
@@ -41,5 +45,9 @@ public class Webinar extends AbstractEntity {
 	boolean ended=false;
 	
 	
+	@ManyToMany(mappedBy = "webinariesToGo", fetch = FetchType.EAGER)
+	private Collection<User> users = new ArrayList<User>();
+
+
 	
 }

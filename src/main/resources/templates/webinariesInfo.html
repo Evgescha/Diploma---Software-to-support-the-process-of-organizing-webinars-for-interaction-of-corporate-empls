@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+    <title>Информация о вебинаре</title>
+    <div th:replace="~{commons :: head}"></div>
+</head>
+ 
+<body>
+
+    <div th:replace="~{commons :: nav}"></div>
+
+<section class="editCategory">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center web-name" th:text="${entity.name}">Вебинар</h2>                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Тема</label>
+                <div class="web-theme" th:text="${entity.theme}"></div>    
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Цели</label>
+                <div class="web-goal" th:text="${entity.goal}"></div>    
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Спикер</label>
+                <div class="web-spiker" th:text="${entity.spiker}"></div>    
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Категория</label>
+                <div class="web-category" th:text="${entity.category}"></div>    
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Дата и время проведения</label>
+                <div class="web-datetime" th:text="${entity.dates}+' '+${entity.times}"></div>    
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Аннотация</label>
+                <div class="web-annotation" th:text="${entity.annotaion}"></div>    
+            </div>            
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Данные для подключения</label>
+                <div class="web-platform" th:text="${entity.dataToConnection}"></div>    
+            </div>            
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">Платформа</label>
+                <div class="web-platform" th:text="${entity.platform}"></div>    
+            </div>            
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <label class="mx-2 my-2">О платформе</label>
+                <div class="web-platform" th:text="${entity.platform.instruction}"></div>    
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="my-5 justify-content-between d-flex">
+                    <input type="hidden" th:id="${entity.id}" th:value=${entity.id}>
+                    <input type="button" class="btn btn-primary" value = " Назад " onclick="history.back()"/>
+                    <a th:if=${isContains} class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
+                    <a th:if=${!isContains} class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
+                </p>
+            </div>            
+        </div>
+
+    </div>    
+</section>    
+    
+</body>
+ 
+</html>
