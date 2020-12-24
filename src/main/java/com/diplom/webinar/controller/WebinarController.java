@@ -116,8 +116,6 @@ public class WebinarController {
 		service.create(entity);
 		
 		User findByUsername = serviceUser.findByUsername(principal.getName());
-		for(String role:findByUsername.getRoleListNames())
-			System.out.println(role);
 		if(findByUsername!=null && findByUsername.getRoleListNames().contains("ROLE_USER"))
 			return "redirect:/webinariesToUser";
 		return "redirect:/webinaries/approved";
