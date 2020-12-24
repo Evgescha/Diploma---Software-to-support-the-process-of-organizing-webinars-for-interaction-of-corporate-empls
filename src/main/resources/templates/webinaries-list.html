@@ -10,12 +10,13 @@
 	
    
 <section class="category-list"> 
+    <h2 class="text-center" th:if="${approved}"> Подтвержденные вебинары</h2>
+    <h2 class="text-center" th:if="${!approved}"> Неподтвержденные запросы</h2>
     <div class="container my-2">
         <div class="card">
             <div class="row">
                 <div class="card-body col">
-                    <h2 class="text-center"> Вебинары</h2>
-                    <div th:switch="${list}" class="container my-5">                        
+                    <div th:switch="${list}" class="container my-5" style="overflow: scroll;">                        
                         <div class="col-md-12">
                             <h2 th:case="null"> Записей не найдено </h2>
                             <div th:case="*">

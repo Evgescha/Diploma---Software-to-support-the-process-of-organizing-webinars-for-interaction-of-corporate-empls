@@ -40,17 +40,41 @@ public class WebinarController {
 	PlatformService servicePlatform;
 
 	@GetMapping
-	String getCategory(Model model) {
+	@RequestMapping(path = { "/approved" })
+	String getApprovedWebinars(Model model) {
 		List<Webinar> list = service.repository.findAll();
 
 		if (list == null)
 			model.addAttribute("list", null);
-		else
+		else {
+			for (int i = list.size() - 1; i >= 0; i--) {
+				if(!list.get(i).isApproved())
+					list.remove(i);
+			}
 			model.addAttribute("list", list);
-
+		}
+		model.addAttribute("approved", true);
 		return "webinaries-list";
 	}
 
+	@GetMapping
+	@RequestMapping(path = { "/notapproved" })
+	String getNotApprovedWebinars(Model model) {
+		List<Webinar> list = service.repository.findAll();
+
+		if (list == null)
+			model.addAttribute("list", null);
+		else{
+			for (int i = list.size() - 1; i >= 0; i--) {
+				if(list.get(i).isApproved())
+					list.remove(i);
+			}
+			model.addAttribute("list", list);
+		}
+		model.addAttribute("approved", false);
+		return "webinaries-list";
+	}
+	
 	@RequestMapping(path = { "/edit", "/edit/{id}" })
 	public String edit(Model model, @PathVariable(name = "id", required = false) Long id, Principal principal)
 			throws RecordNotFoundException {
@@ -73,12 +97,12 @@ public class WebinarController {
 	@RequestMapping(path = "/delete/{id}")
 	public String delete(Model model, @PathVariable("id") Long id) throws Exception {
 		service.delete(id);
-		return "redirect:/webinaries";
+		return "redirect:/webinaries/approved";
 	}
 
 	@RequestMapping(path = "/create", method = RequestMethod.POST)
 	public String createOrUpdate(Webinar entity, @Param("categoryId") Long categoryId,
-			@Param("platformId") Long platformId, @Param("creatorId") Long creatorId, @Param("timeStr") String timeStr)
+			@Param("platformId") Long platformId, @Param("creatorId") Long creatorId, @Param("timeStr") String timeStr, Principal principal)
 			throws Exception {
 
 		entity.setPlatform(servicePlatform.read(platformId));
@@ -90,6 +114,12 @@ public class WebinarController {
 			entity.setTimes(Time.valueOf(timeStr));
 		}
 		service.create(entity);
-		return "redirect:/webinaries";
+		
+		User findByUsername = serviceUser.findByUsername(principal.getName());
+		for(String role:findByUsername.getRoleListNames())
+			System.out.println(role);
+		if(findByUsername!=null && findByUsername.getRoleListNames().contains("ROLE_USER"))
+			return "redirect:/webinariesToUser";
+		return "redirect:/webinaries/approved";
 	}
 }

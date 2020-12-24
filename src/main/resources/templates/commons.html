@@ -30,17 +30,17 @@
                     <a class="nav-item nav-link" href="/webinariesToUser">Вебинары</a>
                     <a class="nav-item nav-link" href="/webinariesToUser/toGo">Выбранные для посещения</a>
                     <a class="nav-item nav-link" href="/webinariesToUser/history">Моя история</a>
-                    <a class="nav-item nav-link" href="/webinariesToUser/createMy">Создать свой</a>
+                    <a class="nav-item nav-link" href="/webinaries/edit">Создать свой</a>
                     <a class="nav-item nav-link" href="/profile">Профиль</a>
                     <a class="nav-item nav-link" href="/logout">Выйти</a>
                 </div>
                 <div class="navbar-nav" th:if="${#request.userPrincipal != null && #request.isUserInRole('ROLE_ADMIN')}">
                 	<a class="nav-item nav-link" href="/">Главная</a>
                     <a class="nav-item nav-link" href="/usersList">Пользователи</a>
-                    <a class="nav-item nav-link" href="/usersCreatingList">Запросы на создание</a>
+                    <a class="nav-item nav-link" href="/webinaries/notapproved">Запросы на создание</a>
                     <a class="nav-item nav-link" href="/categories">Категории</a>
                     <a class="nav-item nav-link" href="/platforms">Платформы</a>
-                    <a class="nav-item nav-link" href="/webinaries">Вебинары</a>
+                    <a class="nav-item nav-link" href="/webinaries/approved">Вебинары</a>
                     <a class="nav-item nav-link" href="/arhive">Архив</a>
                     <a class="nav-item nav-link" href="/statistic">Статистика</a>
                     <a class="nav-item nav-link" href="/logout">Выйти</a>
