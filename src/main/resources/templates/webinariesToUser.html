@@ -28,8 +28,8 @@
                                     </div>
                                     <div class="item-annotaion" th:text="${entity.annotaion}">Аннотация о вебинаре</div>
                                     <div class="item-butons">
-                                        <a th:if=${isContains} class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
-                    					<a th:if=${!isContains} class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
+                                        <a th:if="${isContains and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
+                    					<a th:if="${!isContains  and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
                                         <a href="#" th:href="'/webinariesToUser/info/'+${entity.id}" class="getInfo btn btn-primary">Подробнее</a>
                                     </div>
                                 </div>                               

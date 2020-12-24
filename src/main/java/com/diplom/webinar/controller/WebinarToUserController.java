@@ -44,9 +44,7 @@ public class WebinarToUserController {
 	String getWebinaries(Model model, Principal principal) {
 
 		User user = serviceUser.findByUsername(principal.getName());
-
 		List<Webinar> list = service.repository.findAll();
-
 		if (list == null)
 			model.addAttribute("list", null);
 		else {
@@ -57,6 +55,7 @@ public class WebinarToUserController {
 					list.remove(i);
 					continue;
 				}
+
 				//цикл вебинаров для посещения пользователей
 				for(int j=0;j<user.getWebinariesToGo().size();j++) {
 					if(list.size()==0)continue;
@@ -76,10 +75,10 @@ public class WebinarToUserController {
 	@RequestMapping(path = { "/igo/{id}" })
 	public String addWebinarInList(Model model, @PathVariable("id") Long id, Principal principal)
 			throws Exception {
-		System.out.println("Webinar igo");
 		User user = serviceUser.findByUsername(principal.getName());		
 		user.getWebinariesToGo().add(service.read(id));
 		serviceUser.update(user);
+
 		return "redirect:/webinariesToUser/toGo";
 	}
 
@@ -90,11 +89,36 @@ public class WebinarToUserController {
 
 		System.out.println("Webinar toGo");
 		User user = serviceUser.findByUsername(principal.getName());
+
+		List<Webinar> list =user.getWebinariesToGo();
+		for (int i = list.size() - 1; i >= 0; i--) {
+			if(!list.get(i).isApproved() || list.get(i).isEnded()) 
+				list.remove(i);
+		}
+		
 		model.addAttribute("isContains", true);
-		model.addAttribute("list", user.getWebinariesToGo());
+		model.addAttribute("list", list);
 		return "webinariesToUser";
 	}
 
+	//список всех выбранных для похода
+		@GetMapping
+		@RequestMapping(path = { "/history" })
+		public String getMyHistory(Model model, Principal principal) throws RecordNotFoundException {
+
+			User user = serviceUser.findByUsername(principal.getName());
+			List<Webinar> list =user.getWebinariesToGo();
+			for (int i = list.size() - 1; i >= 0; i--) {
+				if(!list.get(i).isEnded()) 
+					list.remove(i);
+			}
+
+			model.addAttribute("isContains", true);
+			model.addAttribute("isEnded", true);
+			model.addAttribute("list", list);
+			return "webinariesToUser";
+		}
+		
 	// удаление выбранного из своего списка для похода
 	@GetMapping
 	@RequestMapping(path = "/delete/{id}")
@@ -122,6 +146,8 @@ public class WebinarToUserController {
 			if(user.getWebinariesToGo().get(i).getId()==id)
 				isContains=true;
 		model.addAttribute("isContains", isContains);
+		if(read.isEnded())
+		model.addAttribute("isEnded", true);
 		model.addAttribute("entity", read);
 
 		return "webinariesInfo";

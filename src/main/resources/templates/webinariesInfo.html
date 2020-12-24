@@ -86,8 +86,8 @@
                 <p class="my-5 justify-content-between d-flex">
                     <input type="hidden" th:id="${entity.id}" th:value=${entity.id}>
                     <input type="button" class="btn btn-primary" value = " Назад " onclick="history.back()"/>
-                    <a th:if=${isContains} class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
-                    <a th:if=${!isContains} class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
+                    <a th:if="${isContains  and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/delete/'+${entity.id}">Не участвую</a> 
+                    <a th:if="${!isContains and isEnded==null}" class="btn btn-primary" th:href="'/webinariesToUser/igo/'+${entity.id}" >Участвую</a>
                 </p>
             </div>            
         </div>
