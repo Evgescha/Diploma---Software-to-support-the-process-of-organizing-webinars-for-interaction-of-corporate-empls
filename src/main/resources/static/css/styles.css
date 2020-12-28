@@ -26,8 +26,8 @@ html, body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 	color: #444;
 	-webkit-font-smoothing: antialiased;
-	background: url(../img/bg.png) repeat;
-	
+/* 	background: url(../img/bg.png) repeat; */
+	background: #27c0d01c;
 }
 
 #container {
@@ -314,4 +314,7 @@ select{
 
     font-size: 25px;
     font-style: italic;
+}
+.container{
+	background: ghostwhite;
 }
